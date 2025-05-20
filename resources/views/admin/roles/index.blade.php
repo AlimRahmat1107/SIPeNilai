@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('admin.layouts.main')
 
 @section('container')
 
@@ -28,8 +28,16 @@
 
                 <tr>
                     <td class="w-1/3 text-left py-3 px-4">{{ $loop->iteration }}</td>
-                    <td class="w-1/3 text-left py-3 px-4">{{ $role->name }}</td>           
-                    <td class="w-1/3 text-left py-3 px-4"><button id="openModalEdit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"><i class="fas fa-edit mr-3"></i>  </button></td>
+                    <td class="w-1/3 text-left py-3 px-4">{{ $role->name }}</td>
+                    <td class="w-1/3 text-left py-3 px-4 flex">
+                        <button  class="editRole w-10 h-10 bg-blue-500 hover:bg-blue-700 transition duration-300 shadow-md flex justify-center items-center  text-white font-bold py-2 px-4 rounded-full" data-id="{{ $role->id }}" data-name="{{ $role->name }}"><i class="fas fa-edit "></i>  </button>
+                       <form action="{{ route('role.delete',$role->id) }}"  method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus role ini?');">
+                        @csrf
+                        @method('DELETE')
+
+                         <button class="ml-2 w-10 h-10 flex items-center justify-center bg-red-600 text-white rounded-full hover:bg-red-700 transition duration-300 shadow-md" type="submit" onclick="return confirm('Yakin hapus?')"> <i class="fas fa-trash"></i></button>
+                        </form>
+                    </td>
                 </tr>
                 @endforeach
 
@@ -41,16 +49,15 @@
      <!-- Modal Create -->
      <div id="modal" class="fixed inset-0 bg-opacity-50 backdrop-blur-sm flex items-center justify-center hidden">
         <div class="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h2 class="text-xl font-semibold mb-4">Formulir</h2>
+            <h2 class="text-xl font-semibold mb-4">Tambah Role</h2>
 
             <!-- Form -->
             <form action="{{ route('role.post') }}" method="POST">
                 @csrf
-                @method('PUT')
                 <input type="hidden" id="id">
                 <div class="mb-4">
                     <label for="name" class="block text-gray-700">name:</label>
-                    <input type="text" id="name" name="name" class="w-full border rounded-md p-2" value="" required>
+                    <input type="text" id="name" name="name" class="w-full border rounded-md p-2 " value="" required>
                 </div>
 
 
@@ -66,20 +73,22 @@
 
      <div id="modalEdit" class="fixed inset-0 bg-opacity-50 backdrop-blur-sm flex items-center justify-center hidden">
         <div class="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h2 class="text-xl font-semibold mb-4">Formulir</h2>
+            <h2 class="text-xl font-semibold mb-4">Edit Role</h2>
 
             <!-- Form -->
-            <form action="{{ route('role.update',['id' => $role->id ?? '']) }}" method="POST">
+            <form id="editForm" method="POST">
                 @csrf
+                @method('PUT')
+                <input type="hidden" id="edit_id" name="id">
                 <div class="mb-4">
                     <label for="name" class="block text-gray-700">name:</label>
-                    <input type="text" id="name" name="name" value="{{ $roles->name }}" class="w-full border rounded-md p-2" required>
+                    <input type="text" id="edit_name" name="name" value="{{ $role->name ?? '' }}" class="w-full border rounded-md p-2" required>
                 </div>
 
 
 
                 <div class="flex justify-end space-x-2">
-                    <button type="button" id="closeModal" class="px-4 py-2 bg-gray-500 text-white rounded-md">Batal</button>
+                    <button type="button" id="closeModalEdit" class="px-4 py-2 bg-gray-500 text-white rounded-md">Batal</button>
                     <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-md">Simpan</button>
                 </div>
             </form>
@@ -92,28 +101,25 @@
 <script>
 //Modal
 document.addEventListener("DOMContentLoaded", function () {
-    const modalEdit = document.getElementById("modalEdit");
-    const openModalBtnEdit = document.getElementById("openModalEdit");
+    const modal = document.getElementById("modal");
+    const openModalBtn = document.getElementById("openModal");
     const closeModalBtn = document.getElementById("closeModal");
 
     // Buka modal saat tombol diklik
-    openModalBtnEdit.addEventListener("click", function () {
+    openModalBtn.addEventListener("click", function () {
         modal.classList.remove("hidden");
     });
 
-    // Tutup modal saat tombol "Batal" diklik
     closeModalBtn.addEventListener("click", function () {
         modal.classList.add("hidden");
     });
 
-    // Tutup modal saat klik di luar area modal
     window.addEventListener("click", function (event) {
         if (event.target === modal) {
             modal.classList.add("hidden");
         }
     });
 
-    // Tutup modal dengan tombol Escape
     document.addEventListener("keydown", function (event) {
         if (event.key === "Escape") {
             modal.classList.add("hidden");
@@ -124,6 +130,45 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 //modal update
+document.addEventListener("DOMContentLoaded", function () {
+    const modalEdit = document.getElementById("modalEdit");
+    const editForm = document.getElementById("editForm");
+    const closeModalBtnEdit = document.getElementById("closeModalEdit");
+
+    document.querySelectorAll(".editRole").forEach(button=>{
+        button.addEventListener('click',function(){
+            const id = this.dataset.id;
+            const name = this.dataset.name;
+
+            document.getElementById("edit_id").value = id;
+            document.getElementById("edit_name").value = name;
+
+            editForm.action = "/role/update/" +id
+            modalEdit.classList.remove("hidden");
+        })
+    })
+
+
+
+    // Tutup modal saat tombol "Batal" diklik
+    closeModalBtnEdit.addEventListener("click", function () {
+        modalEdit.classList.add("hidden");
+    });
+
+    // Tutup modal saat klik di luar area modal
+    window.addEventListener("click", function (event) {
+        if (event.target === modalEdit) {
+            modalEdit.classList.add("hidden");
+        }
+    });
+
+    // Tutup modal dengan tombol Escape
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            modal.classList.add("hidden");
+        }
+    });
+});
 
 </script>
 

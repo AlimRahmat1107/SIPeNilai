@@ -11,7 +11,7 @@ class RoleController extends Controller
 
     public function index(){
         $roles = Role::all();
-        return view('roles.index',compact('roles'));
+        return view('admin.roles.index',compact('roles'));
     }
 
 
@@ -26,6 +26,22 @@ class RoleController extends Controller
         return redirect('/role');
 
     }
+   public function update(Request $request, $id){
+    $validated = $request->validate([
+        'name' => 'required'
+    ]);
+
+    $role = Role::findOrFail($id); // Cari data berdasarkan ID
+    $role->update($validated); // Update data
+
+    return redirect('/role')->with('success', 'Role berhasil diperbarui!');
+}
+
+public function destroy($id){
+    $role = Role::findOrFail($id);
+    $role->destroy($id);
+    return redirect('/role')->with('success', 'Role berhasil diperbarui!');
+}
 
 
 

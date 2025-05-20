@@ -12,13 +12,13 @@ class UserController extends Controller
 {
     public function index(){
         $users = User::all();
-        return view('users.index',compact('users'));
+        return view('admin.users.index',compact('users'));
     }
 
     public function create(){
         $users = User::all();
         $roles = Role::all();
-        return view('users.create',compact('users','roles'));
+        return view('admin.users.create',compact('users','roles'));
 
     }
 
@@ -38,7 +38,7 @@ class UserController extends Controller
         $user->roles()->attach($request->roles);
 
 
-        return redirect('/user');
+        return redirect('/user')->with('success', 'User berhasil diperbarui!');
 
     }
 
@@ -46,11 +46,35 @@ class UserController extends Controller
 
     public function edit($id){
         $users = User::findOrFail($id);
-        return view('users.update',compact('users'));
+        $roles = Role::all();
+        return view('admin.users.update',compact('users','roles'));
 
     }
 
-    public function update(User $id){
+    public function update(Request $request, $id){
+        $validated = $request->validate([
+            'username' => 'required',
+            'email' => 'email|required',
+            'password' => 'required|min:8|confirmed',
+            'roles.*' =>'exists:roles,id'
+        ]);
+        $user = user::findOrFail($id);
+        $user->roles = ['admin','dosen','kaprodi'];
+
+        $user->update($validated);
+        $user->roles()->sync($request->roles);
+
+        return redirect('/user')->with('success', 'User berhasil diperbarui!');
+
+
 
     }
+
+    public function destroy($id){
+        $user = User::findOrFail($id);
+        $user->destroy($id);
+        return redirect('/user')->with('success', 'Role berhasil diperbarui!');
+    }
+
+
 }
