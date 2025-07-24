@@ -13,7 +13,7 @@
         </div>
             <div class="mt-1 p-2">
                 <label class="block text-sm mb-1" for="username">Username</label>
-                <input class="w-full px-5 py-1 bg-gray-200 rounded  rounded" id="username" name="username" type="text" required="" placeholder="Your Username" aria-label="Username">
+                <input class="w-full px-5 py-1 bg-gray-200 rounded  " id="username" name="username" type="text" required="" placeholder="Your Username" aria-label="Username">
             </div>
 
             <div class="mt-1 p-2">

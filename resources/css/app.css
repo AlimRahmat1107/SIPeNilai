@@ -23,6 +23,12 @@
     src: url("/fonts/roboto/Roboto-Light.ttf") format("truetype");
 }
 
+@layer utilities {
+  .bg-login {
+    background-image: url('/public/img/bgti.png');
+  }
+}
+
 
 
 .active-link {

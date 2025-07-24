@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('semesters', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->integer('number');
-            $table->foreignId('academic_year_id');
+            $table->string('code')->unique();
+            $table->integer('number')->unique();
+            $table->enum('name',['GANJIL','GENAP']);
+            $table->foreignId('academic_year_id')->constrained();
             $table->timestamps();
         });
     }

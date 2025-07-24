@@ -8,7 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class StudyProgram extends Model
 {
     use HasFactory;
-    protected $guard = [];
+    protected $fillable = ['name','major_id'];
 
+    public function major(){
+        return $this->belongsTo(Major::class,'major_id');
+    }
 
+    public function curicullum(){
+        return $this->hasMany(Curicullum::class);
+    }
 }

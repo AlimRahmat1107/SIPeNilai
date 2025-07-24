@@ -6,23 +6,22 @@
             <p class="text-xl pb-3 flex items-center">
                 <i class="fas fa-list mr-3"></i> Table User
             </p>
-            <a href="/user-create" class="bg-blue-500   hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"><i class="fas fa-plus mr-1"></i>Tambah
-                data</a>
+            <a href="/academicyear/create" class=" text-white block rounded-2xl py-2 px-4 border border-amber-300 bg-blue-400"> <i class="fas fa-plus"></i>  data</a>
         </div>
 
         <div class="bg-white overflow-auto">
             <table class="min-w-full bg-white">
-                <thead class="bg-[#374151] text-white">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">No</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium  uppercase tracking-wider">Username</th>
-                        <th class="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">email</th>
-                        <th class="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">Role</th>
-                        <th class="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">Password</th>
-                        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Action  </th>
+                <thead class="bg-[#374151] text-white text-base">
+                    <tr class="border-b border-gray-200">
+                        <th class="px-4 py-2 text-left  font-medium  uppercase tracking-wider">No</th>
+                        <th class="w-1/3 px-4 py-2 text-left  font-medium  uppercase tracking-wider">Username</th>
+                        <th class="w-1/3 text-left px-4 py-2 uppercase font-semibold ">email</th>
+                        <th class="w-1/3 text-left px-4 py-2 uppercase font-semibold ">Role</th>
+                        <th class="w-1/3 text-left px-4 py-2 uppercase font-semibold ">Password</th>
+                        <th class="w-1/3 text-center px-4 py-2 uppercase font-semibold ">Action  </th>
                     </tr>
                 </thead>
-                <tbody class="text-gray-800 ">
+                <tbody class="text-gray-800 text-sm">
                     @foreach ($users as $user)
                         <tr>
                             <td class=" text-left py-3 px-4">{{ $loop->iteration }}</td>
@@ -35,7 +34,7 @@
                             <td class=" text-left py-3 px-4">{{ Str::limit($user->password,20) }}</td>
                             <td class=" text-left py-3 px-4 flex">
                                 <a href="/user/update/{{ $user->id }}" class="w-10 h-10 bg-blue-500 hover:bg-blue-700 transition duration-300 shadow-md flex justify-center items-center  text-white font-bold py-2 px-4 rounded-full"><i class="fas fa-edit "></i></a>
-                                <form action="{{ route('user.delete',$user->id) }}"  method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus role ini?');">
+                                <form action="{{ route('user.delete',$user->id) }}"  method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?');">
                                     @csrf
                                     @method('DELETE')
 

@@ -55,14 +55,15 @@ class UserController extends Controller
         $validated = $request->validate([
             'username' => 'required',
             'email' => 'email|required',
-            'password' => 'required|min:8|confirmed',
+            'password' => '|min:8|confirmed',
             'roles.*' =>'exists:roles,id'
         ]);
+        $roles = $validated['roles'] ?? [];
+        unset($validated['roles']);
         $user = user::findOrFail($id);
-        $user->roles = ['admin','dosen','kaprodi'];
 
         $user->update($validated);
-        $user->roles()->sync($request->roles);
+        $user->roles()->sync($roles);
 
         return redirect('/user')->with('success', 'User berhasil diperbarui!');
 

@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('admin.layouts.main')
 
 @section('container')
 
@@ -14,7 +14,10 @@
             <label for="fileInput" class="px-4 py-2 mx-1 bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-700">
                 Pilih File
             </label>
-            <span id="fileName" class=" text-gray-700 bg-gray-200 rounded">Tidak ada file</span>
+             <span id="fileName" 
+            class="text-gray-700 bg-gray-200 rounded whitespace-nowrap inline-block overflow-hidden text-ellipsis max-w-[160px] px-2">
+             Tidak ada file
+        </span>
             </div>
             {{-- <input class="px-5 py-1 text-gray-700 bg-gray-200 rounded" type="file" name="file" accept=".csv"> --}}
             <button type="submit" class="px-4 py-2 mx-1 bg-blue-500 text-white rounded cursor-pointer hover:bg-blue-700">Import CSV</button>

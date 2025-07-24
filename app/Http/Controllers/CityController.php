@@ -11,7 +11,7 @@ class CityController extends Controller
 {
     public function index(){
         $cities = City::paginate(10);
-        return view('cities.index',compact('cities'));
+        return view('admin.cities.index',compact('cities'));
     }
 
     public function import(Request $request)

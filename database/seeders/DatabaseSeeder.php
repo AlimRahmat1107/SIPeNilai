@@ -106,38 +106,56 @@ class DatabaseSeeder extends Seeder
              // ambil path file csv
              $fileProvince = database_path('\seeders\file\prov.csv');
              $fileCity = database_Path('\seeders\file\city1.csv');
-             $fileDistrict = database_path('\seeders\file\kec.csv');
+             $fileSubdistrict = database_path('\seeders\file\kec.csv');
              $fileWard = database_Path('\seeders\file\kel.csv');
+
+             //membuka csv dengan delimeter
+             function readCsvWithSemicolon($file){
+                $data = [];
+                if(($handle = fopen($file,'r')) !== false){
+                    while(($row=fgetcsv($handle,0,';')) !== false){
+                        $data[] =$row;
+                    }
+                    fclose($handle);
+                }
+                return $data;
+             }
 
 
 
              //
-             $csvProvince = array_map('str_getcsv',file($fileProvince));
-             $csvCity = array_map('str_getcsv', file($fileCity));
-             $csvDistrict = array_map('str_getcsv', file($fileDistrict));
-             $csvWard = array_map('str_getcsv', file($fileWard));
+             $csvProvince = readCsvWithSemicolon($fileProvince);
+             $csvCity = readCsvWithSemicolon($fileCity);
+             $csvSubdistrict = readCsvWithSemicolon($fileSubdistrict);
+             $csvWard = readCsvWithSemicolon($fileWard);
+           ;
 
 
 
 
              foreach($csvProvince as $data){
                $province = Province::create([
-                    'name' => $data
+                    'name' => $data[1]
                 ]);
+
             }
              foreach($csvCity as $data){
                 $city = City::create([
-                    'name' => $data
+                    'name' => $data[1],
+                    'province_id'=> $data[2]
                 ]);
             }
-             foreach($csvDistrict as $data){
+
+             foreach($csvSubdistrict as $data){
                 $subdistrict = Subdistrict::create([
-                    'name' => $data
+                    'name' => $data[1],
+                    'city_id' => $data[2]
                 ]);
             }
              foreach($csvWard as $data){
                $ward =  Ward::create([
-                    'name' => $data
+                    'name' => $data[1],
+                    'subdistrict_id' => $data[2]
                 ]);
             }
 
@@ -147,7 +165,7 @@ class DatabaseSeeder extends Seeder
 
 
             // Path file sumber
-             $sourcePath = database_path('seeder\file\admin.jpg');
+             $sourcePath = database_path('seeders\file\admin.jpg');
 
              // Nama file unik agar tidak tabrakan
              $filename = Str::random(10).'.jpg';
@@ -158,7 +176,7 @@ class DatabaseSeeder extends Seeder
             //  simpan informasi ke database
              Profile::create([
                 'user_id' => $admin->id,
-                'photo' => 'uploads/'. $filename, 
+                'photo' => 'uploads/'. $filename,
                 'fullName' => 'alim rahmat putra',
                 'nickName' => 'alim',
                 'phone' => '081313131313',
@@ -167,7 +185,7 @@ class DatabaseSeeder extends Seeder
                 'ward_id' => $ward->id,
                 'city_id' => $city->id,
                 'subdistrict_id' => $subdistrict->id,
-                'gender' => [0],
+                'gender' => 'LAKI-LAKI',
                 'dot'=> '2001-11-05'
              ]);
 

@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class AcademicYear extends Model
 {
     use HasFactory;
+    protected $guarded = [];
+
+
+    public function semester(){
+         return $this->hasMany(Semester::class);
+    }
+    
+
 }
