@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -13,23 +14,24 @@ class LoginController extends Controller
         return view('admin.Auth.login');
     }
     
-    public function login(Request $request){
-        $credentials = $request->only('username','password');
+    public function authenticate(Request $request): RedirectResponse {
+        // $credentials = $request->only('username','password');
+        
 
-        $request->validate([
-            'username'=> 'required',
-            'password' => 'required| string|min:8',
+       $credentials= $request->validate([
+            'email'=> 'required|email',
+            'password' => 'required|string|',
 
         ]);
 
         if(Auth::attempt($credentials)){
             $request->session()->regenerate();
-            return redirect()->intended('/');
+            return redirect()->intended(route('admin.dashboard'));
         }
 
         return back()->withErrors([
             'email' => 'email atau password salah'
-        ]);
+        ])->onlyInput('email');
     }
 
     public function logout(Request $request){

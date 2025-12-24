@@ -15,7 +15,7 @@
 
 </head>
 
-<body class="h-screen bg-gray-100">
+<body class="h-screen bg-gray-100 overflow-x-hidden">
     <div class="grid grid-cols-[250px_1fr] grid-rows-[auto_1fr] h-full  ">
 
 
@@ -26,7 +26,7 @@
 
         {{-- fixed lg:static top-0 left-0 w-64 h-full bg-[#374151] text-white transform -translate-x-full lg:translate-x-0 transition-transform duration-300 lg:flex flex-col justify-between p-4 shadow-xl z-50 lg:row-span-2 --}}
 
-        <aside id="sidebar" class="lg:row-span-2 bg-[#374151] hidden lg:flex flex-col justify-between">
+        <aside id="sidebar" class="lg:row-span-2 bg-[#374151] hidden lg:flex flex-col justify-between overflow-hidden">
 
 
             <a href="/" class="flex p-2 m-4 border border-blue-700 text-lg font-[Roboto] ">
@@ -41,13 +41,13 @@
 
             <nav class="font-inter flex flex-col sidebar-nav border border-amber-600 text-white  scale-95 ">
 
-                <a href="/"
+                <a href="{{route('admin.dashboard')}}"
                     class="flex items-center active-nav-link py-4 pl-6 nav-item hover:scale-90 sidebar-link">
                     <i class="fas fa-tachometer-alt mr-3"></i>
                     <span class=" w-full">Dashboard</span>
                 </a>
 
-                <button class="dropdown-toggle flex items-center py-4 pl-6 hover:scale-90 sidebar-link">
+                <button class="dropdown-toggle  flex items-center py-4 pl-6 hover:scale-90 sidebar-link">
                     <i class="fas fa-user mr-3"></i>
                     <span>User</span>
                     <span id="arrowSelect" class="ml-2 transform -rotate-90 ">&#9662;</span>
@@ -55,34 +55,34 @@
 
                 <div
                     class=" relative  ml-2 w-48 bg-white  shadow-lg rounded-lg overflow-hidden  hidden transition-all duration-750 text-black menu border border-amber-500 ">
-                    <a href="/user" class="block px-4 py-2  hover:bg-gray-400"> <i class="fas fa-user mr-3"></i>
+                    <a href="{{route('users.index')}}" class="block px-4 py-2  hover:bg-gray-400"> <i class="fas fa-user mr-3"></i>
                         User</a>
-                    <a href="/profiles" class="block px-4 py-2  hover:bg-gray-400"> <i
+                    <a href="{{route('profiles.index')}}" class="block px-4 py-2  hover:bg-gray-400"> <i
                             class="fas fa-user-cog mr-3"></i>Profile</a>
-                    <a href="/role" class="block px-4 py-2  hover:bg-gray-400"> <i
+                    <a href="{{route('roles.index')}}" class="block px-4 py-2  hover:bg-gray-400"> <i
                             class="fas fa-users mr-3"></i>Role</a>
-                    <a href="/provinces" class="block px-4 py-2  hover:bg-gray-400"> <i
+                    <a href="{{route('provinces.index')}}" class="block px-4 py-2  hover:bg-gray-400"> <i
                             class="fas fa-map-marked-alt mr-3"></i>Provinsi</a>
-                    <a href="/cities" class="block px-4 py-2  hover:bg-gray-400"> <i
+                    <a href="{{route('cities.index')}}" class="block px-4 py-2  hover:bg-gray-400"> <i
                             class="fas fa-city mr-3"></i>Kota</a>
-                    <a href="/wards" class="block px-4 py-2  hover:bg-gray-400"> <i
+                    <a href="{{route('wards.index')}}" class="block px-4 py-2  hover:bg-gray-400"> <i
                             class="fas fa-landmark mr-3"></i>Kelurahan</a>
-                    <a href="/subdistricts" class="block px-4 py-2  hover:bg-gray-400"> <i
+                    <a href="{{route('districts.index')}}" class="block px-4 py-2  hover:bg-gray-400"> <i
                             class="fas fa-landmark mr-3"></i>Kecamatan</a>
                 </div>
 
                  <div class="relative">
-                    <button class="dropdown-toggle flex items-center py-4 pl-6 hover:scale-90 sidebar-link">
+                    <button class="dropdown-toggle  flex items-center py-4 pl-6 hover:scale-90 sidebar-link">
                         <i class="fas fa-laptop-code mr-3"></i>
                         <span>Jurusan</span>
                         <span id="arrowSelect" class="ml-2 transform rotate-270">&#9662;</span>
                     </button>
 
                     <div
-                        class="   ml-2 w-48 bg-white shadow-lg rounded-lg overflow-hidden  hidden transition-opacity duration-200 -99 text-black">
-                        <a href="/jurusan" class="block px-4 py-2  hover:bg-gray-400"> <i class="fas fa-laptop-code mr-3"></i>
+                        class="relative  ml-2 w-48 bg-white  shadow-lg rounded-lg overflow-hidden  hidden transition-all duration-750 text-black menu border border-amber-500 ">
+                        <a href="{{route('majors.index')}}" class="block px-4 py-2  hover:bg-gray-400"> <i class="fas fa-laptop-code mr-3"></i>
                             Jurusan</a>
-                        <a href="/prodi" class="block px-4 py-2  hover:bg-gray-400 whitespace-nowrap" > <i class="fas fa-laptop-code mr-3"></i>
+                        <a href="{{route('prodis.index')}}" class="block px-4 py-2  hover:bg-gray-400 whitespace-nowrap" > <i class="fas fa-laptop-code mr-3"></i>
                             Program Studi</a>
 
                     </div>
@@ -97,11 +97,11 @@
 
                 <div
                     class="ml-2 w-48 bg-white shadow-lg rounded-lg overflow-hidden  hidden transition-opacity duration-200  text-black">
-                    <a href="/academicyear" class="block px-4 py-2  hover:bg-gray-400"> <i class="fas fa-user mr-3"></i>
+                    <a href="{{route('academicyears.index')}}" class="block px-4 py-2  hover:bg-gray-400"> <i class="fas fa-user mr-3"></i>
                         Tahun Akademik</a>
-                    <a href="/semester" class="block px-4 py-2  hover:bg-gray-400"> <i
+                    <a href="{{route('semesters.index')}}" class="block px-4 py-2  hover:bg-gray-400"> <i
                             class="fas fa-user-cog mr-3"></i>Semester</a>
-                    <a href="/kurikulum" class="block px-4 py-2  hover:bg-gray-400"> <i
+                    <a href="{{route('kurikulums.index')}}" class="block px-4 py-2  hover:bg-gray-400"> <i
                             class="fas fa-user-cog mr-3"></i>Kurikulum</a>
                   
 
@@ -116,9 +116,9 @@
 
                     <div
                         class="   ml-2 w-48 bg-white shadow-lg rounded-lg overflow-hidden  hidden transition-opacity duration-200 -99 text-black">
-                        <a href="/dosen" class="block px-4 py-2  hover:bg-gray-400"> <i class="fas fa-user mr-3"></i>
+                        <a href="{{route('lectures.index')}}" class="block px-4 py-2  hover:bg-gray-400"> <i class="fas fa-user mr-3"></i>
                             Dosen</a>
-                        <a href="/penugasan-pengajar" class="block px-4 py-2  hover:bg-gray-400 whitespace-nowrap" > <i class="fas fa-user mr-3"></i>
+                        <a href="{{route('penugasan-dosen.index')}}" class="block px-4 py-2  hover:bg-gray-400 whitespace-nowrap" > <i class="fas fa-user mr-3"></i>
                             Penugasan Pengajar</a>
 
                     </div>
@@ -133,15 +133,15 @@
 
                     <div
                         class="   ml-2 w-48 bg-white shadow-lg rounded-lg overflow-hidden  hidden transition-opacity duration-200 z-99 text-black">
-                        <a href="/mahasiswa" class="block px-4 py-2  hover:bg-gray-400"> <i
+                        <a href="{{route('students.index')}}" class="block px-4 py-2  hover:bg-gray-400"> <i
                                 class="fas fa-user mr-3"></i> Mahasiswa</a>
-                        <a href="/kelas" class="block px-4 py-2  hover:bg-gray-400"> <i
+                        <a href="{{route('kelas.index')}}" class="block px-4 py-2  hover:bg-gray-400"> <i
                                 class="fas fa-users mr-3"></i>Kelas</a>
-                        <a href="/matakuliah" class="block px-4 py-2  hover:bg-gray-400"> <i
+                        <a href="{{route('courses.index')}}" class="block px-4 py-2  hover:bg-gray-400"> <i
                                 class="fas fa-users mr-3"></i>Matakuliah</a>
-                        <a href="/scs" class="block px-4 py-2 whitespace-nowrap hover:bg-gray-400 " > <i
+                        <a href="{{route('scs.index')}}" class="block px-4 py-2 whitespace-nowrap hover:bg-gray-400 " > <i
                                 class="fas fa-users mr-3 "></i>Semester kelas mahasiwa</a>
-                        <a href="/csc" class="block px-4 py-2  hover:bg-gray-400"> <i
+                        <a href="{{route('csc.index')}}" class="block px-4 py-2  hover:bg-gray-400"> <i
                                 class="fas fa-users mr-3"></i>Mata Kuliah kurikulum semester</a>
 
                     </div>
@@ -156,11 +156,11 @@
 
                     <div
                         class="   ml-2 w-48 bg-white shadow-lg rounded-lg overflow-hidden  hidden transition-opacity duration-200 -99 text-black">
-                        <a href="/enrollment" class="block px-4 py-2  hover:bg-gray-400"> <i class="fas fa-user mr-3"></i>
+                        <a href="{{route('enrollments.index')}}" class="block px-4 py-2  hover:bg-gray-400"> <i class="fas fa-user mr-3"></i>
                             Enrollment</a>
-                        <a href="/nilai" class="block px-4 py-2  hover:bg-gray-400"> <i class="fas fa-user mr-3"></i>
+                        <a href="{{route('grades.index')}}" class="block px-4 py-2  hover:bg-gray-400"> <i class="fas fa-user mr-3"></i>
                             Nilai</a>
-                        <a href="/subnilai" class="block px-4 py-2  hover:bg-gray-400"> <i
+                        <a href="{{route('subgrades.index')}}" class="block px-4 py-2  hover:bg-gray-400"> <i
                                 class="fas fa-user-cog mr-3"></i>Sub Nilai</a>
 
                     </div>
@@ -186,14 +186,15 @@
 
         </aside>
 
-        <header class="bg-[#E5E7EB] text-[#111827]  relative p-4 justify-between shadow-md flex    ">
+        <header class="bg-[#E5E7EB] text-[#111827]  relative p-4 justify-end shadow-md flex overflow-hidden    ">
 
-            <div class="ml-auto border border-amber-500">
+            <div class=" border border-amber-500 ">
+
                 <button id="profileButton" class="flex items-center    ">
                     <!-- Foto Profil -->
-                    <img src="" alt="Profile Picture" class="w-10 h-10 rounded-full mr-2 ">
+                    <img src="{{asset('uploads/'. auth()->user()->profile->photo)}}" alt="Profile Picture" class="w-10 h-10 rounded-full mr-2 ">
                     <div>
-                        <h2 class="text-sm   font-semibold">John Doe</h2>
+                        <h2 class="text-sm   font-semibold">{{auth()->user()->username}}</h2>
                         <p class="text-xs ">Software Engineer</p>
                     </div>
                     <span id="arrow" class="transform rotate-180 ">&#9662;</span> <!-- Panah dropdown -->
@@ -203,7 +204,7 @@
 
                 <div id="dropdownMenu"
                     class="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg overflow-hidden  opacity-0 invisible transition-opacity duration-200">
-                    <a href="/profile" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">Profile</a>
+                    <a href="{{route('profiles.index')}}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">Profile</a>
                     <a href="/logout" class="block px-4 py-2 text-red-600 hover:bg-red-100">Logout</a>
                 </div>
             </div>
@@ -214,7 +215,7 @@
 
 
         <!--Main-->
-        <main class="bg-gray-200  ">
+        <main class="bg-gray-200 overflow-x-hidden  ">
             @yield('container')
 
         </main>
@@ -249,7 +250,6 @@
             }
         })
 
-        isOpen = false
         //fitur dropdown sidebar
 
         document.querySelectorAll(".dropdown-toggle").forEach(toggle => {
@@ -269,19 +269,21 @@
             });
 
         });
-
         document.addEventListener('click', function(e) {
             document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+
                 let menu = toggle.nextElementSibling;
                 const arrow = toggle.querySelector('#arrowSelect')
                 if (!menu.classList.contains('hidden') && !toggle.contains(e.target) && !menu.contains(e
                         .target)) {
                     menu.classList.add('hidden')
                 }
-                arrow.classList.toggle("")
-            })
+                            arrow.classList.toggle("-rotate-90");
 
+            })
         })
+
+    
 
 
 

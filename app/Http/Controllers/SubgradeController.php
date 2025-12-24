@@ -11,9 +11,15 @@ class SubgradeController extends Controller
 {
          public function index()
     {
-        $subGrades =  Subgrade::all();
+        $subGrades =  Subgrade::with('grade')->orderBy('grade_id')->paginate(10);
 
         return view('admin.subgrades.index', compact('subGrades'));
+    }
+         public function indexUser()
+    {
+         $subGrades =  Subgrade::with('grade')->orderBy('grade_id')->paginate(10);
+
+        return view('subgrade', compact('subGrades'));
     }
 
     public function create()

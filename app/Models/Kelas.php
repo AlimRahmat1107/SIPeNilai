@@ -8,9 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Kelas extends Model
 {
     use HasFactory;
-    protected $fillable = ['name','semester_id'];
+    protected $fillable = ['name'];
 
-    public function semester(){
-        return $this->belongsTo(Semester::class,'semester_id');
-    }
+    
 }

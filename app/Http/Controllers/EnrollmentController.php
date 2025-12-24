@@ -15,9 +15,15 @@ class EnrollmentController extends Controller
 {
        public function index()
     {
-        $enrollments =  Enrollment::all();
+        $enrollments =  Enrollment::with(['lecture','semester','student','csc','scs'])->orderBy('lecture_id')->orderBy('semester_id')->paginate(10);
 
         return view('admin.enrollments.index', compact('enrollments'));
+    }
+       public function indexUser()
+    {
+        $enrollments =  Enrollment::all();
+
+        return view('enrollment', compact('enrollments'));
     }
 
     public function create()

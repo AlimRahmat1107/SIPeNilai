@@ -8,55 +8,54 @@ use App\Models\Profile;
 use App\Models\User;
 use App\Models\Province;
 use App\Models\City;
+use App\Models\District;
 use App\Models\Ward;
 use App\Models\Subdistrict;
+use App\Models\UrbanVillage;
 
 class ProfileController extends Controller
 {
     public function index(){
-        $profiles = Profile::all();
+        $profiles = Profile::with(['user','province','city','urbanVillage','district'])->orderBy('user_id')->paginate(10);
         return view('admin.profiles.index',compact('profiles'));
     }
 
     public function create(){
-        $dataProfiles = Profile::all();
-        $dataUsers = User::all();
-        $dataProvinces = Province::all();
-        $dataCities = City::all();
-        $dataWards = Ward::all();
-        $dataSubdistricts =Subdistrict::all();
-        return view('admin.profiles.create',compact('dataProfiles','dataUsers','dataProvinces','dataCities','dataWards','dataSubdistricts'));
+        $profiles = Profile::all();
+        $users = User::all();
+        $provinces = Province::all();
+        $cities = City::all();
+        $urbanVillages = UrbanVillage::all();
+        $districts =District::all();
+        return view('admin.profiles.create',compact('profiles','users','provinces','cities','urbanVillages','districts'));
 
     }
 
     public function store(Request $request){
 
-
         $validated = $request->validate([
             'user_id' => 'required',
-            'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'fullName' => 'required',
             'nickName' => 'required',
             'phone' => 'required',
             'address' => 'required',
             'province_id' => 'required',
             'city_id' => 'required',
-            'subdistrict_id' => 'required',
-            'ward_id' => 'required',
+            'district_id' => 'required',
+            'urban_village_id' => 'required',
             'gender' => 'required',
             'dot' => 'required'
 
         ]);
 
-        if ($request->hasFile('picture')) {
-            $file = $request->file('picture');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads'), $filename);
+      if ($request->hasFile('photo')) {
+    $file = $request->file('photo');
+    $filename = time() . '_' . $file->getClientOriginalName();
+    $file->move(public_path('uploads'), $filename);
+    $validated['photo'] = $filename;
+}
 
-            $profile = new profile();
-            $profile->pitcure = $filename;
-            $profile->save();   
-        }
 
 
 
@@ -71,13 +70,13 @@ class ProfileController extends Controller
 
 
     public function edit($id){
-        $dataProfiles = Profile::find($id);
-        $dataUsers = User::all();
-        $dataProvinces = Province::all();
-        $dataCities = City::all();
-        $dataWards = Ward::all();
-        $dataSubdistricts =Subdistrict::all();
-        return view('admin.profiles.update',compact('dataProfiles','dataUsers','dataProvinces','dataCities','dataWards','dataSubdistricts'));
+        $profiles = Profile::find($id);
+        $users = User::all();
+        $provinces = Province::all();
+        $cities = City::all();
+        $urbanVillages = UrbanVillage::all();
+        $districts =District::all();
+        return view('admin.profiles.update',compact('profiles','users','provinces','cities','urbanVillages','districts'));
 
 
     }
@@ -90,8 +89,8 @@ class ProfileController extends Controller
             'phone' => 'required',
             'address' => 'required',
             'province_id' => 'required',
-            'ward_Id' => 'required',
-            'subdistrict_id' => 'required',
+            'urban_village_id' => 'required',
+            'district_id' => 'required',
             'city_id' => 'required',
             'gender' => 'required',
             'dot' => 'required'
@@ -101,7 +100,7 @@ class ProfileController extends Controller
         $profile->update($validated);
 
 
-        return redirect('/profiles')->with('success', 'profile berhasil diperbarui!');
+        return redirect(route('profiles.index'))->with('success', 'profile berhasil diperbarui!');
 
 
 
@@ -110,7 +109,7 @@ class ProfileController extends Controller
     public function destroy($id){
         $profile = Profile::findOrFail($id);
         $profile->destroy($id);
-        return redirect('/profiles')->with('success', 'Profile berhasil diperbarui!');
+        return redirect(route('profiles.index'))->with('success', 'Profile berhasil diperbarui!');
     }
 
     public function getSearch(Request $request)
@@ -130,22 +129,23 @@ class ProfileController extends Controller
     }
 
 
-    public function getCity($provinsiID){
+    public function getCity($provinceID){
+        $city = City::where('province_id',$provinceID)->get();
+        return response()->json($city);
+        
+    }
+   
 
-        $kota = City::where('province_id',$provinsiID)->get();
-        return response()->json($kota);
+    public function getDistrict($cityID){
+
+        $district = District::where('city_id',$cityID)->get();
+        return response()->json($district);
     }
 
-    public function getSubdistrict($cityID){
+    public function getUrbanVillage($districtID){
 
-        $kecamatan = Subdistrict::where('city_id',$cityID)->get();
-        return response()->json($kecamatan);
-    }
-
-    public function getWard($subdistrictsID){
-
-        $kelurahan = Ward::where('subdistrict_id',$subdistrictsID)->get();
-        return response()->json($kelurahan);
+        $urbanVillage = UrbanVillage::where('district_id',$districtID)->get();
+        return response()->json($urbanVillage);
     }
 
 

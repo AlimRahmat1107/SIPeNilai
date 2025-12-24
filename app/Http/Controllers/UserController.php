@@ -6,18 +6,20 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
-    public function index(){
-        $users = User::all();
+    public function index(): View{
+        $users = User::paginate(10);
         return view('admin.users.index',compact('users'));
     }
 
-    public function create(){
-        $users = User::all();
+    public function create(): View{
         $roles = Role::all();
+
         return view('admin.users.create',compact('users','roles'));
 
     }
@@ -25,20 +27,29 @@ class UserController extends Controller
     public function store(Request $request){
 
         $validated = $request->validate([
-            'username' => 'required',
-            'email' => 'email|required',
+            'username' => 'required|unique:users,username',
+            'email' => 'email|required|unique:users,email',
             'password' => 'required|min:8|confirmed',
-            'roles.*' =>'exists:roles,id'
-        ]);
+            'roles.*' =>'exists:roles,id',
+            'roles'=> 'required'
+        ],
+    [
+       'email' => 'Email ini telah di gunakan' ,
+       'username' => 'Username ini telah di gunakan' ,
+       'password_confirmation' => ' password tidak sama',
+       'roles' => 'pilih salah satu Role'
+    ]);
 
 
         $validated['password'] = Hash::make($validated['password']);
 
        $user = User::create($validated);
+
         $user->roles()->attach($request->roles);
 
 
-        return redirect('/user')->with('success', 'User berhasil diperbarui!');
+
+        return redirect(route('users.index'))->with('success', 'User berhasil ditambahkan!');
 
     }
 
@@ -65,7 +76,7 @@ class UserController extends Controller
         $user->update($validated);
         $user->roles()->sync($roles);
 
-        return redirect('/user')->with('success', 'User berhasil diperbarui!');
+        return redirect(route('users.index'))->with('success', 'User berhasil diperbarui!');
 
 
 
@@ -74,7 +85,22 @@ class UserController extends Controller
     public function destroy($id){
         $user = User::findOrFail($id);
         $user->destroy($id);
-        return redirect('/user')->with('success', 'Role berhasil diperbarui!');
+        return redirect(route('users.index'))->with('success', 'Role berhasil dihapus!');
+    }
+
+    public function search(Request $request){
+
+        $users = User::with('roles')->where('username','like','%'.$request['search'].'%')->get();
+  
+        // $users =DB::table('users')->join('role_user','users.id','=','role_user.user_id')
+        // ->join('roles','role_user.role_id','=','roles.id')
+        // ->where('username','like','%'.$request['search'].'%')
+        // ->select('users.*','roles.name as roles')
+        // ->get();
+
+
+       
+        return view('admin.users.index', compact('users'));
     }
 
 

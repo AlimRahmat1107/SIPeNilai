@@ -2,7 +2,7 @@
 
 @section('container')
 
-<div class="flex gap-4">
+<div class="flex gap-4 p-4">
 
 <div class="bg-[#374151] size-40 w-2xs ml-3 mt-3 rounded-4xl flex justify-end items-center  ">
  <p class="p-3 text-white mr-6 text-4xl">20</p>

@@ -8,45 +8,52 @@ use App\Models\Major;
 
 class MajorController extends Controller
 {
-     public function index(){
-        $majors =  Major::all();
-        return view('admin.majors.index',compact('majors'));
+    public function index()
+    {
+        $majors =  Major::paginate(10);
+        return view('admin.majors.index', compact('majors'));
     }
 
-    public function create(){
+    public function create()
+    {
         $majors =  Major::all();
-  
-        return view('admin.majors.create',compact('majors',));
+
+        return view('admin.majors.create', compact('majors',));
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
-       $validated = $request->validate([
-            'name' => 'required', 
+        $validated = $request->validate([
+            'name' => 'required',
         ]);
 
         Major::create($validated);
-        return redirect('/jurusan');
+        return redirect(route('majors.index'));
     }
 
-       public function edit(){
-        $majors =  Major::all();
-         return view('admin.majors.update',compact('majors'));
+    public function edit($id)
+    {
+        $majors =  Major::find($id);
+        return view('admin.majors.update', compact('majors'));
     }
 
 
-    public function update(Request $request){
-      $validated =  $request->validate([
-            'semester_code' => 'require',
-            'name' => 'required', 
-            'academic_year_id' => 'required',
+    public function update(Request $request, $id)
+    {
+        $validated =  $request->validate([
+            'name' => 'required',
         ]);
-        Major::updated($validated);
-        return redirect('/jurusan');
+
+        $majors = Major::findOrFail($id);
+        $majors->update($validated);
+        return redirect(route('majors.index'));
     }
 
 
-    public function delete($id){
-        Major::deleted($id);
+    public function destroy($id)
+    {
+        Major::destroy($id);
+        return redirect(route('majors.index'));
     }
 }

@@ -30,12 +30,13 @@
                         <tr>
                             <td class=" text-left py-3 px-4">{{ $loop->iteration }}</td>
                             <td class=" text-left py-3 px-4">{{ $data->lecture->user->username }}</td>
+                            <td class=" text-left py-3 px-4">{{ $data->semester->code }}</td>
                             <td class=" text-left py-3 px-4">{{ $data->student->name}}</td>
                             <td class=" text-left py-3 px-4">{{ $data->csc->course->name}}</td>
                             <td class=" text-left py-3 px-4">{{ $data->scs->kelas->name}}</td>
                             <td class=" text-left py-3 px-4 flex">
                                 <a href="/user/update/{{ $data->id }}" class="w-10 h-10 bg-blue-500 hover:bg-blue-700 transition duration-300 shadow-md flex justify-center items-center  text-white font-bold py-2 px-4 rounded-full"><i class="fas fa-edit "></i></a>
-                                <form action="{{ route('user.delete',$data->id) }}"  method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?');">
+                                <form action="{{ route('enrollments.destroy',$data->id) }}"  method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?');">
                                     @csrf
                                     @method('DELETE')
 

@@ -6,7 +6,7 @@
             <i class="fas fa-list mr-3"></i> User Form
         </p>
         <div class="leading-loose">
-            <form class="p-10 bg-white rounded shadow-xl" action="{{ route('study_program.create') }}" method="POST"
+            <form class="p-10 bg-white rounded shadow-xl" action="{{ route('prodis.store') }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="text-center">
@@ -20,8 +20,8 @@
                         <div class="mt-1 p-2">
                             <label class="block text-sm mb-1 text-gray-600" for="name">Program Studi</label>
                             <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="name" name="name"
-                                type="text" required placeholder="Masukan Jurusan">
-                        </div>
+                                type="text" required placeholder="Masukan Program studi">
+                    </div>
 
                         <div class="mt-1 p-2">
                             <label class="block text-sm mb-1 text-gray-600" for="major_id">User</label>

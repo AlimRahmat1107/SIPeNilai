@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
+            $table->string('province_id');
+            $table->string('urban_village_id');
             $table->string('photo');
             $table->string('fullName');
             $table->String ('nickName');
             $table->String ('phone');
             $table->string('address');
-            $table->string('province_id');
-            $table->string('ward_id');
-            $table->string('subdistrict_id');
+            $table->string('district_id');
             $table->string('city_id');
             $table->enum('gender',['LAKI-LAKI','PEREMPUAN']);
             $table->date('dot');

@@ -13,10 +13,12 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Role;
 use App\Models\Province;
 use App\Models\City;
+use App\Models\District;
 use App\Models\User;
 use App\Models\Subdistrict;
 use App\Models\Ward;
 use App\Models\Profile;
+use App\Models\UrbanVillage;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -106,8 +108,8 @@ class DatabaseSeeder extends Seeder
              // ambil path file csv
              $fileProvince = database_path('\seeders\file\prov.csv');
              $fileCity = database_Path('\seeders\file\city1.csv');
-             $fileSubdistrict = database_path('\seeders\file\kec.csv');
-             $fileWard = database_Path('\seeders\file\kel.csv');
+             $fileDistrict = database_path('\seeders\file\kec.csv');
+             $fileUrbanVillage = database_Path('\seeders\file\kel.csv');
 
              //membuka csv dengan delimeter
              function readCsvWithSemicolon($file){
@@ -126,8 +128,8 @@ class DatabaseSeeder extends Seeder
              //
              $csvProvince = readCsvWithSemicolon($fileProvince);
              $csvCity = readCsvWithSemicolon($fileCity);
-             $csvSubdistrict = readCsvWithSemicolon($fileSubdistrict);
-             $csvWard = readCsvWithSemicolon($fileWard);
+             $csvDistrict = readCsvWithSemicolon($fileDistrict);
+             $csvUrbanVillage = readCsvWithSemicolon($fileUrbanVillage);
            ;
 
 
@@ -146,16 +148,16 @@ class DatabaseSeeder extends Seeder
                 ]);
             }
 
-             foreach($csvSubdistrict as $data){
-                $subdistrict = Subdistrict::create([
+             foreach($csvDistrict as $data){
+                $district = District::create([
                     'name' => $data[1],
                     'city_id' => $data[2]
                 ]);
             }
-             foreach($csvWard as $data){
-               $ward =  Ward::create([
+             foreach($csvUrbanVillage as $data){
+               $urbanVillage =  UrbanVillage::create([
                     'name' => $data[1],
-                    'subdistrict_id' => $data[2]
+                    'district_id' => $data[2]
                 ]);
             }
 
@@ -176,15 +178,15 @@ class DatabaseSeeder extends Seeder
             //  simpan informasi ke database
              Profile::create([
                 'user_id' => $admin->id,
-                'photo' => 'uploads/'. $filename,
+                'photo' => $filename,
                 'fullName' => 'alim rahmat putra',
                 'nickName' => 'alim',
                 'phone' => '081313131313',
                 'address'=> 'limau manis',
                 'province_id'=> $province->id,
-                'ward_id' => $ward->id,
+                'urban_village_id' => $urbanVillage->id,
                 'city_id' => $city->id,
-                'subdistrict_id' => $subdistrict->id,
+                'district_id' => $district->id,
                 'gender' => 'LAKI-LAKI',
                 'dot'=> '2001-11-05'
              ]);

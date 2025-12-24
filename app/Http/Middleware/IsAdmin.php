@@ -14,15 +14,16 @@ class IsAdmin
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
-    {
-        if(Auth::check() && Auth::user()->roles->contains('name','admin')){
+  public function handle(Request $request, Closure $next): Response
+{
+    if (Auth::check()) {
+        $user = Auth::user()->load('roles'); 
 
-        return $next($request);
-
+        if ($user->roles->contains('name', 'admin')) {
+            return $next($request);
         }
-
-
-        abort(403,'hanya untuk admin');
     }
+
+    abort(403, 'Hanya untuk admin');
+}
 }

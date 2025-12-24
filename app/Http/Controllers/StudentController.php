@@ -11,8 +11,12 @@ use App\Models\StudyProgram;
 class StudentController extends Controller
 {
      public function index(){
-        $students =  Student::all();
+        $students =  Student::with('kelas','studyProgram')->orderBy('study_program_id','kelas_id')->paginate(10);
         return view('admin.students.index',compact('students'));
+    }
+     public function indexUser(){
+        $students =  Student::all();
+        return view('student',compact('students'));
     }
 
     public function create(){

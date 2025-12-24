@@ -13,7 +13,7 @@ class CuricullumSemesterCourseController extends Controller
 {
     public function index()
     {
-        $csc =  CuricullumSemesterCourse::all();
+        $csc =  CuricullumSemesterCourse::with(['curicullum','semester','course'])->orderBy('semester_id')->paginate(10);
 
         return view('admin.csc.index', compact('csc'));
     }

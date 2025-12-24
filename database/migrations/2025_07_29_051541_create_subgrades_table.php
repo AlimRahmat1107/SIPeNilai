@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('subgrades', function (Blueprint $table) {
             $table->id();
             $table->foreignId('grade_id');
-            $table->string('nama_tugas');
-            $table->integer('nilai_tugas');
+            $table->string('nama_tugas')->nullable();
+            $table->integer('nilai_tugas')->nullable();
             $table->timestamps();
         });
     }

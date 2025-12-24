@@ -4,11 +4,11 @@
     <div class="w-11/12 mt-6 ml-10">
         <div class="mb-2 flex justify-between">
             <p class="text-xl pb-3 flex items-center">
-                <i class="fas fa-list mr-3"></i> Table Mahasiswa
+                <i class="fas fa-list mr-3"></i> Table Jurusan
             </p>
             <div>
-                <a href="/jurusan/create"
-                    class=" text-white block rounded-2xl py-2 px-4 border border-amber-300 bg-blue-400"> <i
+                <a href="{{ route('majors.create') }}"
+                    class=" text-white block rounded-2xl py-2 px-4 border border-amber-300 bg-blue-400 hover:bg-blue-600"> <i
                         class="fas fa-plus"></i> data</a>
             </div>
         </div>
@@ -28,10 +28,10 @@
                             <td class=" text-left py-3 px-4">{{ $loop->iteration }}</td>
                             <td class=" text-left py-3 px-4">{{ $data->name }}</td>
                             <td class=" text-left py-3 px-4 flex justify-center">
-                                <a href="/user/update/{{ $data->id }}"
+                                <a href="{{route('majors.edit',$data->id)}}"
                                     class="w-10 h-10 bg-blue-500 hover:bg-blue-700 transition duration-300 shadow-md flex justify-center items-center  text-white font-bold py-2 px-4 rounded-full"><i
                                         class="fas fa-edit "></i></a>
-                                <form action="{{ route('user.delete', $data->id) }}" method="POST"
+                                <form action="{{ route('majors.destroy', $data->id) }}" method="POST"
                                     onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?');">
                                     @csrf
                                     @method('DELETE')

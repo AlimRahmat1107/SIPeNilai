@@ -30,7 +30,7 @@
                             <td class=" text-left py-3 px-4">{{ $data->enrollment->csc->course->name}}</td>
                             <td class=" text-left py-3 px-4 flex">
                                 <a href="/user/update/{{ $data->id }}" class="w-10 h-10 bg-blue-500 hover:bg-blue-700 transition duration-300 shadow-md flex justify-center items-center  text-white font-bold py-2 px-4 rounded-full"><i class="fas fa-edit "></i></a>
-                                <form action="{{ route('user.delete',$data->id) }}"  method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?');">
+                                <form action="{{ route('penugasan-dosen.destroy',$data->id) }}"  method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?');">
                                     @csrf
                                     @method('DELETE')
 

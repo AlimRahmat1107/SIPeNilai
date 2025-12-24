@@ -11,6 +11,7 @@ class Role extends Model
     protected $fillable = ['name'];
 
     public function Users(){
-        return $this->belongsToMany(User::class,'role_user');
+        return $this->belongsToMany(User::class,'role_user')
+        ->withPivot('role');
     }
 }

@@ -4,7 +4,7 @@
     <div class="w-11/12 mt-6 ml-10">
         <div class="mb-2 flex justify-between">
             <p class="text-xl pb-3 flex items-center">
-                <i class="fas fa-list mr-3"></i> Table Mahasiswa
+                <i class="fas fa-list mr-3"></i> Table Matakuliah
             </p>
             <div>
                 <a href="/matakuliah/create"
@@ -33,7 +33,7 @@
                                 <a href="/user/update/{{ $data->id }}"
                                     class="w-10 h-10 bg-blue-500 hover:bg-blue-700 transition duration-300 shadow-md flex justify-center items-center  text-white font-bold py-2 px-4 rounded-full"><i
                                         class="fas fa-edit "></i></a>
-                                <form action="{{ route('user.delete', $data->id) }}" method="POST"
+                                <form action="{{ route('courses.destroy', $data->id) }}" method="POST"
                                     onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?');">
                                     @csrf
                                     @method('DELETE')

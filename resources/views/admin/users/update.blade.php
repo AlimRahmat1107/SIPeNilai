@@ -8,7 +8,7 @@
             <i class="fas fa-list mr-3"></i> User Form
         </p>
         <div class="leading-loose">
-            <form class="p-10 bg-white rounded shadow-xl" action="{{ route('user.update',$users->id) }}" method="POST">
+            <form class="p-10 bg-white rounded shadow-xl" action="{{ route('users.update',$users->id) }}" method="POST">
                 @csrf
                 @method('PUT')
                 <div class="text-center">
@@ -31,8 +31,10 @@
                     <label class="block text-sm mb-1 text-black " for="role">Role</label>
                     @foreach ($roles as $role)
                     <input type="checkbox" name="roles[]" value="{{ $role->id }}" {{ in_array($role->id, $users->roles->pluck('id')->toArray()) ? 'checked' : '' }}>{{ $role->name }} <br>
+
                 @endforeach
                 </div>
+
 
                 <div class="mt-1 p-2">
                     <label class="block text-sm mb-1 text-black " for="password">Password</label>
@@ -50,7 +52,7 @@
 
                 <div class="mt-6 flex justify-end">
                     <button class="px-4 py-1  text-white font-light tracking-wider bg-gray-900 rounded"
-                        type="submit">Tambahkan</button>
+                        type="submit">Update</button>
                 </div>
             </form>
         </div>

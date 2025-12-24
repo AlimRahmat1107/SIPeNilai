@@ -11,9 +11,15 @@ class GradeController extends Controller
 {
        public function index()
     {
-        $grades =  Grade::all();
+        $grades =  Grade::with('enrollment')->orderBy('enrolmment_id')->paginate(10);
 
         return view('admin.grades.index', compact('grades'));
+    }
+       public function indexUser()
+    {
+        $grades =  Grade::all();
+
+        return view('grade', compact('grades'));
     }
 
     public function create()

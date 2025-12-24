@@ -6,16 +6,15 @@
             <i class="fas fa-list mr-3"></i> User Form
         </p>
         <div class="leading-loose">
-            <form class="p-10 bg-white rounded shadow-xl" action="{{ route('major.create') }}" method="POST"
+            <form class="p-10 bg-white rounded shadow-xl" action="{{ route('majors.store') }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="text-center">
-                    <p class="text-lg text-gray-800 font-medium pb-4 ">Tambahkan Profile</p>
+                    <p class="text-lg text-gray-800 font-medium pb-4 ">Tambahkan Jurusan</p>
                 </div>
 
                 <div class="flex w-full justify-between mt-2">
                     <div class="w-[40%]">
-                        <span> Informasi Pengguna</span>
 
                         <div class="mt-1 p-2">
                             <label class="block text-sm mb-1 text-gray-600" for="name">Jurusan</label>

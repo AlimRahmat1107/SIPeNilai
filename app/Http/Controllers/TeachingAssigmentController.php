@@ -11,11 +11,17 @@ use App\Models\Lecture;
 
 class TeachingAssigmentController extends Controller
 {
-     public function index()
+    public function index()
     {
-        $teachingAssigments =  TeachingAssigment::all();
-        
+        $teachingAssigments =  TeachingAssigment::with('lecture', 'enrollment')->orderBy('lecture_id')->orderBy('enrollment_id')->paginate(10);
+
         return view('admin.teachingassigments.index', compact('teachingAssigments'));
+    }
+    public function indexUser()
+    {
+        $teachingAssigments =  TeachingAssigment::with('lecture', 'enrollment')->orderBy('lecture_id')->orderBy('enrollment_id')->paginate(10);
+
+        return view('teachingassigment', compact('teachingAssigments'));
     }
 
     public function create()
@@ -23,7 +29,7 @@ class TeachingAssigmentController extends Controller
         $teachingAssigments =  TeachingAssigment::all();
         $lecturs = Lecture::all();
         $enrollments = Enrollment::all();
-        return view('admin.teachingassigments.create', compact('teachingAssigments', 'lecturs','enrollments'));
+        return view('admin.teachingassigments.create', compact('teachingAssigments', 'lecturs', 'enrollments'));
     }
 
     public function store(Request $request)
@@ -31,7 +37,7 @@ class TeachingAssigmentController extends Controller
         $validated =   $request->validate([
             'lecture_id' => 'required',
             'enrollment_id' => 'required',
-      
+
         ]);
 
         TeachingAssigment::create($validated);

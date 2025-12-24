@@ -9,12 +9,17 @@ use App\Models\Course;
 class CourseController extends Controller
 {
     public function index(){
-        $courses =  Course::all();
+        $courses =  Course::paginate();
         return view('admin.courses.index',compact('courses'));
     }
 
+    public function indexUser(){
+        $courses =  Course::paginate();
+        return view('course',compact('courses'));
+    }
+
     public function create(){
-        $courses =  Course::all();
+        $courses =  Course::paginate();
   
         return view('admin.courses.create',compact('courses'));
     }

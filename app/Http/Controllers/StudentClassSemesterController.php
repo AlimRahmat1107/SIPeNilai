@@ -13,7 +13,9 @@ class StudentClassSemesterController extends Controller
 {
      public function index()
     {
-        $scs =  StudentClassSemester::all();
+        $scs =  StudentClassSemester::with(['student','semester','kelas'])->orderBy('semester_id')
+        ->orderBy('kelas_id')
+        ->orderBy('student_id')->paginate(10);
 
         return view('admin.scs.index', compact('scs'));
     }

@@ -12,7 +12,7 @@
 
     </head>
 
-    <body class="h-screen w-screen bg-login">
+    <body class="h-screen w-screen  bg-login ">
         <div class=" w-full h-full flex justify-center items-center">
 
 
@@ -25,21 +25,27 @@
                     <form action="{{route('login.create')}}" method="POST">
                         @csrf
                         <div class="mt-1 p-2">
-                            <label class="block text-sm mb-1 text-gray-600" for="username">Username</label>
-                            <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="username"
-                                name="username" type="text" required placeholder="Masukan Username">
+                            <label class="block text-sm mb-3 text-gray-600" for="email">Masukan Email</label>
+                            <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded-xl" id="email"
+                                name="email" type="text" required placeholder="Masukan email">
                         </div>
+                          @error('email')
+                        <div class="text-sm text-red-600 mt-1">
+                            {{$message}}
+                        </div>
+                            
+                        @enderror
                  
                         <div class="mt-1 p-2">
-                            <label class="block text-sm mb-1 text-gray-600" for="password">Password</label>
-                            <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="password"
+                            <label class="block text-sm mb-3 text-gray-600 " for="password">Password</label>
+                            <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded-xl" id="password"
                                 name="password" type="password" required placeholder="Masukan password">
                         </div>
-
+                      
                      
 
                           <div class="mt-1 p-2 text-center">
-                            <button class="bg-gray-500 hover:bg-[#374151] w-full p-2 rounded-2xl text-white">Masuk</button>
+                            <button class="bg-gray-500 hover:bg-[#374151] w-full p-2 rounded-2xl text-white mt-8 mb-4">Masuk</button>
                             <a href="/register" class="border w-full p-2 rounded-2xl text-black mt-4 inline-block">Register</a>
                         </div>
 
@@ -50,6 +56,7 @@
 
 
             </div>
+        </div>
     </body>
 
     </html>

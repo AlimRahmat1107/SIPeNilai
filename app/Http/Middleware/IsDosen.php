@@ -17,11 +17,17 @@ class IsDosen
      */
     public function handle(Request $request, Closure $next): Response
     {
-         if (Auth::check() && Auth::user()->roles->contains('name', 'dosen')) {
-            dd(Auth::user()->roles->pluck('name'));
+        if(Auth::check()){
+            $user = Auth::user()->load('roles');
 
-        return $next($request);
-    }
+            if($user->roles->contains('name','dosen')){
+                return $next($request);
+
+            }
+        }
+
+        dd(Auth::check());
+   
 
     abort(403, 'hanya untuk dosen');
     }

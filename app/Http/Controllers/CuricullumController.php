@@ -10,7 +10,7 @@ use App\Models\StudyProgram;
 class CuricullumController extends Controller
 {
     public function index(){
-        $curicullums =  Curicullum::all();
+        $curicullums =  Curicullum::with('study_program_id')->orderBy('student_id')->paginate(10);
         return view('admin.curicullums.index',compact('curicullums'));
     }
 

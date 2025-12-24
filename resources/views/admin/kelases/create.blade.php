@@ -6,7 +6,7 @@
             <i class="fas fa-list mr-3"></i> User Form
         </p>
         <div class="leading-loose">
-            <form class="p-10 bg-white rounded shadow-xl" action="{{ route('kelas.create') }}" method="POST"
+            <form class="p-10 bg-white rounded shadow-xl" action="{{ route('kelas.store') }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="text-center">
@@ -22,16 +22,7 @@
                             <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="name" name="name"
                                 type="text" required placeholder="Alamat Lengkap">
                         </div>
-                        <div class="mt-1 p-2">
-                            <label class="block text-sm mb-1 text-gray-600" for="semester_id">Semester</label>
-                            <select name="semester_id" id="semester_id"
-                                class="w-full px-5 py-2 text-gray-700 bg-gray-200 rounded">
-                                <option value="">Select User</option>
-                                @foreach ($semesters as $data)
-                                    <option value="{{ $data->id }}">{{ $data->code }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                   
 
 
                     </div>

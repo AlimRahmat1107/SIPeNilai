@@ -12,7 +12,7 @@ use App\Models\Major;
 class LectureController extends Controller
 {
      public function index(){
-        $lecturs =  Lecture::all();
+        $lecturs =  Lecture::with(['user','major','studyProgram'])->orderBy('study_program_id')->paginate(10);
         return view('admin.lecturs.index',compact('lecturs'));
     }
 
@@ -21,6 +21,7 @@ class LectureController extends Controller
         $users =  User::all();
         $majors =  Major::all();
         $studyPrograms =  StudyProgram::all();
+
         return view('admin.lecturs.create',compact('lecturs','users','majors','studyPrograms'));
     }
 

@@ -7,7 +7,7 @@
         <i class="fas fa-list mr-3"></i> User Form
     </p>
     <div class="leading-loose">
-        <form class="p-10 bg-white rounded shadow-xl" action="{{ route('semester.create') }}" method="POST" enctype="multipart/form-data">
+        <form class="p-10 bg-white rounded shadow-xl" action="{{ route('semester.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="text-center">
                 <p class="text-lg text-gray-800 font-medium pb-4 ">Tambahkan Profile</p>

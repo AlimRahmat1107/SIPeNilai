@@ -4,18 +4,20 @@
     <div class="w-11/12 mt-6 ml-10">
         <div class="mb-2 flex justify-between">
             <p class="text-xl pb-3 flex items-center">
-                <i class="fas fa-list mr-3"></i> Table User
+                <i class="fas fa-list mr-3"></i> Table Profil
             </p>
 
             <div class="">
                 <form action="{{ route('profile.search') }}" method="POST">
-                @csrf
-                <input type="text" placeholder="search" class="w-[400px] text-gray-700 shadow-xs p-1 bg-gray-200 rounded border-[#394053] border-1" name="search">
-                <button type="submit" class="w-[1] bg-gray-400 px-4 py-1 rounded-lg ">search</button>
+                    @csrf
+                    <input type="text" placeholder="search"
+                        class="w-[400px] text-gray-700 shadow-xs p-1 bg-gray-200 rounded border-[#394053] border-1"
+                        name="search">
+                    <button type="submit" class="w-[1] bg-gray-400 px-4 py-1 rounded-lg ">search</button>
                 </form>
             </div>
 
-            <a href="/profiles/create" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Tambah
+            <a href="{{route('profiles.create')}}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-3xl"><i class="fas fa-plus"></i>
                 data</a>
 
 
@@ -44,29 +46,46 @@
                 <tbody class="text-gray-700">
                     @foreach ($profiles as $profile)
                         <tr>
-                            <td class="w-[150px] text-left py-3 px-4 capitalize  text-sm">{{ $profile->users->username ?? 'tidak di isi'}}</td>
-                            <td class="w-[120px] text-left py-3 px-4 capitalize  text-sm">
-                                <img src="{{ asset('uploads/' . $profile->picture) }}" alt="" class="w-[40px] h-[40px]">
-                              </td>
 
-                            <td class=" text-left py-3 px-4 capitalize  text-sm">{{ $profile->fullName ?? 'tidak di isi'}}</td>
-                            <td class=" text-left py-3 px-4 capitalize  text-sm">{{ $profile->nickName ?? 'tidak di isi' }}</td>
-                            <td class=" text-left py-3 px-4 capitalize  text-sm">{{ $profile->phone ?? 'tidak di isi' }}</td>
-                            <td class=" text-left py-3 px-4 capitalize  text-sm">{{ $profile->address ?? 'tidak di isi' }}</td>
-                            <td class=" text-left py-3 px-4 capitalize  text-sm">{{ $profile->provinces->name ?? 'tidak di isi' }}</td>
-                            <td class=" text-left py-3 px-4 capitalize  text-sm">{{ $profile->cities->name ?? 'tidak di isi' }}</td>
-                            <td class=" text-left py-3 px-4 capitalize  text-sm">{{ $profile->subdistricts->name  ?? 'tidak di isi'}}</td>
-                            <td class=" text-left py-3 px-4 capitalize  text-sm">{{ $profile->wards->name ?? 'tidak di isi' }}</td>
-                            <td class=" text-left py-3 px-4 capitalize  text-sm">{{ $profile->gender ?? 'tidak di isi' }}</td>
+                            <td class="w-[150px] text-left py-3 px-4 capitalize  text-sm">
+                                {{ $profile->user->username ?? 'tidak di isi' }}</td>
+                            <td class="w-[120px] text-left py-3 px-4 capitalize  text-sm">
+                                <img src="{{ asset('storage/uploads/' . $profile->photo) }}" alt=""
+                                    class="w-[100px] h-[100px]">
+                            </td>
+                            <td class=" text-left py-3 px-4 capitalize  text-sm">{{ $profile->fullName ?? 'tidak di isi' }}
+                            </td>
+                            <td class=" text-left py-3 px-4 capitalize  text-sm">{{ $profile->nickName ?? 'tidak di isi' }}
+                            </td>
+                            <td class=" text-left py-3 px-4 capitalize  text-sm">{{ $profile->phone ?? 'tidak di isi' }}
+                            </td>
+                            <td class=" text-left py-3 px-4 capitalize  text-sm">{{ $profile->address ?? 'tidak di isi' }}
+                            </td>
+                            <td class=" text-left py-3 px-4 capitalize  text-sm">
+                                {{ $profile->province->name ?? 'tidak di isi' }}</td>
+                            <td class=" text-left py-3 px-4 capitalize  text-sm">
+                                {{ $profile->city->name ?? 'tidak di isi' }}</td>
+                            <td class=" text-left py-3 px-4 capitalize  text-sm">
+                                {{ $profile->district->name ?? 'tidak ada isi' }}</td>
+                            <td class=" text-left py-3 px-4 capitalize  text-sm">
+                                {{ $profile->urbanVillage->name ?? 'tidak di isi' }}</td>
+                            <td class=" text-left py-3 px-4 capitalize  text-sm">{{ $profile->gender ?? 'tidak di isi' }}
+                            </td>
                             <td class=" text-center py-2 ">{{ $profile->dot }}</td>
                             <td class=" text-center py-3 px-5 flex">
-                                <a href="/profiles/update/{{ $profile->id }}" class="w-10 h-10 bg-blue-500 hover:bg-blue-700 transition duration-300 shadow-md flex justify-center items-center  text-white font-bold py-2 px-4 rounded-full"><i class="fas fa-edit "></i></a>
-                                <form action="{{ route('user.delete',$profile->id) }}"  method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus role ini?');">
+                                <a href="/profiles/update/{{ $profile->id }}"
+                                    class="w-10 h-10 bg-blue-500 hover:bg-blue-700 transition duration-300 shadow-md flex justify-center items-center  text-white font-bold py-2 px-4 rounded-full"><i
+                                        class="fas fa-edit "></i></a>
+                                <form action="{{ route('profiles.destroy', $profile->id) }}" method="POST"
+                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus role ini?');">
                                     @csrf
                                     @method('DELETE')
 
-                                     <button class="ml-2 w-10 h-10 flex items-center justify-center bg-red-600 text-white rounded-full hover:bg-red-700 transition duration-300 shadow-md" type="submit" onclick="return confirm('Yakin hapus?')"> <i class="fas fa-trash"></i></button>
-                                    </form>
+                                    <button
+                                        class="ml-2 w-10 h-10 flex items-center justify-center bg-red-600 text-white rounded-full hover:bg-red-700 transition duration-300 shadow-md"
+                                        type="submit" onclick="return confirm('Yakin hapus?')"> <i
+                                            class="fas fa-trash"></i></button>
+                                </form>
 
                             </td>
                             {{-- <td class="text-left py-3 px-4"><a class="hover:text-blue-500" href="mailto:jonsmith@mail.com">
@@ -78,6 +97,9 @@
                 </tbody>
             </table>
         </div>
+
+
+        
 
 
     </div>

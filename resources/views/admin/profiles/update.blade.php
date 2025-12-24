@@ -4,7 +4,7 @@
 
 <div class="w-full mt-6 pl-0 lg:pl-2">
     <p class="text-xl pb-6 flex items-center">
-        <i class="fas fa-list mr-3"></i> User Form
+        <i class="fas fa-list mr-3"></i> Profil Form
     </p>
     <div class="leading-loose">
         <form class="p-10 bg-white rounded shadow-xl" action="{{ route('profile.update',$dataProfiles->id) }}" method="POST" enctype="multipart/form-data">
@@ -20,7 +20,6 @@
 
             <div class="flex w-full justify-between mt-2">
                 <div class="w-[40%]">
-                    <span> Informasi Pengguna</span>
             <div class="mt-1 p-2">
                 <label class="block text-sm mb-1 text-gray-600" for="user_id">User</label>
                 <select name="user_id" id="user_id" class="w-full px-5 py-2 text-gray-700 bg-gray-200 rounded">

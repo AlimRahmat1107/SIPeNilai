@@ -17,8 +17,9 @@
                 <thead class="bg-[#374151] text-white text-base">
                     <tr class="border-b border-gray-200">
                         <th class="px-4 py-2 text-left  font-medium  uppercase tracking-wider">No</th>
-                        <th class="w-1/3 px-4 py-2 text-left  font-medium  uppercase tracking-wider">Enrollment</th>
-                        <th class="w-1/3 text-left px-4 py-2 uppercase font-semibold ">Semester</th>
+                        <th class="w-1/3 px-4 py-2 text-left  font-medium  uppercase tracking-wider">Grade</th>
+                        <th class="w-1/3 text-left px-4 py-2 uppercase font-semibold ">Nama Tugas</th>
+                        <th class="w-1/3 text-left px-4 py-2 uppercase font-semibold ">Nilai Tugas</th>
                         <th class="w-1/3 text-center px-4 py-2 uppercase font-semibold ">Action  </th>
                     </tr>
                 </thead>
@@ -26,13 +27,9 @@
                     @foreach ($subGrades as $data)
                         <tr>
                             <td class=" text-left py-3 px-4">{{ $loop->iteration }}</td>
-                            <td class=" text-left py-3 px-4">{{ $data->name }}</td>
-                            <td class=" text-left py-3 px-4">{{ $data->semester->code }}</td>
-                            <td class=" text-left py-3 px-4">
-
-                                {{ $data->roles->pluck('name')->implode(', ') }}
-                                </td>
-                            <td class=" text-left py-3 px-4">{{ Str::limit($data->password,20) }}</td>
+                            <td class=" text-left py-3 px-4">{{ $data->grade->enrollment->student->name }}</td>
+                            <td class=" text-left py-3 px-4">{{ $data->nama_tugas }}</td>
+                            <td class=" text-left py-3 px-4">{{ $data->nilai_tugas }}</td>
                             <td class=" text-left py-3 px-4 flex">
                                 <a href="/user/update/{{ $data->id }}" class="w-10 h-10 bg-blue-500 hover:bg-blue-700 transition duration-300 shadow-md flex justify-center items-center  text-white font-bold py-2 px-4 rounded-full"><i class="fas fa-edit "></i></a>
                                 <form action="{{ route('user.delete',$data->id) }}"  method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?');">

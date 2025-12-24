@@ -4,13 +4,13 @@
 
 <div class="w-full mt-6 pl-0 lg:pl-2">
     <p class="text-xl pb-6 flex items-center">
-        <i class="fas fa-list mr-3"></i> User Form
+        <i class="fas fa-list mr-3"></i> Profile Form
     </p>
     <div class="leading-loose">
-        <form class="p-10 bg-white rounded shadow-xl" action="{{ route('profile.post') }}" method="POST" enctype="multipart/form-data">
+        <form class="p-10 bg-white rounded shadow-xl" action="{{ route('profiles.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="text-center">
-                <p class="text-lg text-gray-800 font-medium pb-4 ">Tambahkan Profile</p>
+                <p class="text-lg text-gray-800 font-medium pb-4 ">Tambahkan Profil</p>
             </div>
 
             <div class="flex w-full justify-between mt-2">
@@ -20,8 +20,8 @@
                 <label class="block text-sm mb-1 text-gray-600" for="user_id">User</label>
                 <select name="user_id" id="user_id" class="w-full px-5 py-2 text-gray-700 bg-gray-200 rounded">
                     <option value="">Select User</option>
-                    @foreach ($dataUsers as $user)
-                        <option value="{{ $user->id }}">{{ $user->username }}</option>
+                    @foreach ($users as $data)
+                        <option value="{{ $data->id }}">{{ $data->username }}</option>
                     @endforeach
                 </select>
             </div>
@@ -38,8 +38,8 @@
                 </div> --}}
 
                 <div class="mt-1 p-2">
-                    <label class="block text-sm mb-1 text-gray-600" for="picture ">Foto Profile </label>
-                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="picture " name="picture" type="file" required placeholder="Nama Lengkap">
+                    <label class="block text-sm mb-1 text-gray-600" for="photo ">Foto Profile </label>
+                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" id="photo " name="photo" type="file" required placeholder="Nama Lengkap">
                 </div>
 
             <div class="mt-1 p-2">
@@ -85,10 +85,10 @@
 
             <div class="mt-1 p-2">
                 <label class="block text-sm mb-1 text-gray-600" for="province_id">Provinsi</label>
-                <select name="province_id" id="provinsi" class="w-full px-5 py-2 text-gray-700 bg-gray-200 rounded">
+                <select name="province_id" id="province" class="w-full px-5 py-2 text-gray-700 bg-gray-200 rounded">
                     <option value="">Pilih Provinsi</option>
-                    @foreach ($dataProvinces as $province)
-                        <option value="{{ $province->id }}">{{ $province->name }}</option>
+                    @foreach ($provinces as $data)
+                        <option value="{{ $data->id }}">{{ $data->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -101,15 +101,15 @@
             </div>
 
             <div class="mt-1 p-2">
-                <label class="block text-sm mb-1 text-gray-600" for="subdistrict_id">Kecamatan</label>
-                <select name="subdistrict_id" id="subdistrict" class="w-full px-5 py-2 text-gray-700 bg-gray-200 rounded">
+                <label class="block text-sm mb-1 text-gray-600" for="district_id">Kecamatan</label>
+                <select name="district_id" id="district" class="w-full px-5 py-2 text-gray-700 bg-gray-200 rounded">
                     <option value="">Pilih Kecamatan</option>
                 </select>
             </div>
 
             <div class="mt-1 p-2">
-                <label class="block text-sm mb-1 text-gray-600" for="ward_id">Kelurahan</label>
-                <select name="ward_id" id="ward" class="w-full px-5 py-2 text-gray-700 bg-gray-200 rounded">
+                <label class="block text-sm mb-1 text-gray-600" for="urban_village_id">Kelurahan</label>
+                <select name="urban_village_id" id="urban-village" class="w-full px-5 py-2 text-gray-700 bg-gray-200 rounded">
                     <option value="">Pilih Kelurahan</option>
                 </select>
             </div>
@@ -134,11 +134,11 @@
 {{-- select provinsi kota kecamatan kelurahan --}}
 <script>
     $(document).ready(function() {
-        $('#provinsi').change(function() {
-            let provinsiID = $(this).val();
-            if (provinsiID) {
+        $('#province').change(function() {
+            let provinceID = $(this).val();
+            if (provinceID) {
                 $.ajax({
-                    url: '/get-kota/' + provinsiID,
+                    url: '/admin/get-city/' + provinceID,
                     type: 'GET',
                     dataType: 'json',
                     success: function(data) {
@@ -147,6 +147,8 @@
                         $.each(data, function(key, value) {
                             $('#city').append('<option value="' + value.id + '">' + value.name + '</option>');
                         });
+
+                        
 
 
                     }
@@ -163,33 +165,33 @@
             console.log(cityID);
             if (cityID) {
                 $.ajax({
-                    url: '/get-kecamatan/' + cityID,
+                    url: '/admin/get-district/' + cityID,
                     type: 'GET',
                     dataType: 'json',
                     success: function(data) {
 
                         //subdistrict
-                        $('#subdistrict').empty().append('<option value="">Pilih Kecamatan</option>');
+                        $('#district').empty().append('<option value="">Pilih kecamatan</option>');
                         $.each(data, function(key, value) {
-                            $('#subdistrict').append('<option value="' + value.id + '">' + value.name + '</option>');
+                            $('#district').append('<option value="' + value.id + '">' + value.name + '</option>');
                         });
 
 
                     }
                 });
             } else {
-                $('#subdistrict').empty().append('<option value="">Pilih Kota</option>');
+                $('#district').empty().append('<option value="">Pilih Kota</option>');
             }
         });
     });
 
     $(document).ready(function() {
-        $('#subdistrict').change(function() {
-            let subdistrictID = $(this).val();
-            console.log(subdistrictID);
-            if (subdistrictID) {
+        $('#district').change(function() {
+            let districtID = $(this).val();
+            console.log(districtID);
+            if (districtID) {
                 $.ajax({
-                    url: '/get-kelurahan/' + subdistrictID,
+                    url: '/admin/get-urban-village/' + districtID,
                     type: 'GET',
                     dataType: 'json',
                     success: function(data) {
@@ -197,14 +199,14 @@
 
 
                         //ward
-                        $('#ward').empty().append('<option value="">Pilih Kelurahan</option>');
+                        $('#urban-village').empty().append('<option value="">Pilih Kelurahan</option>');
                         $.each(data, function(key, value) {
-                            $('#ward').append('<option value="' + value.id + '">' + value.name + '</option>');
+                            $('#urban-village').append('<option value="' + value.id + '">' + value.name + '</option>');
                         });
                     }
                 });
             } else {
-                $('#ward').empty().append('<option value="">Pilih Kota</option>');
+                $('#urban-village').empty().append('<option value="">Pilih Kota</option>');
             }
         });
     });

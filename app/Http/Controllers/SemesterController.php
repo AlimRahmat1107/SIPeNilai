@@ -12,7 +12,7 @@ class SemesterController extends Controller
 {
     public function index()
     {
-        $semesters =  Semester::all();
+        $semesters =  Semester::with('academicYear')->orderBy('academic_year_id')->paginate(10);
 
         return view('admin.semester.index', compact('semesters'));
     }

@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('grades', function (Blueprint $table) {
             $table->id();
             $table->foreignId('enrollment_id');
-            $table->integer('sikap');
-            $table->integer('tugas');
-            $table->integer('kompetensi');
-            $table->integer('nilai_akhir');
+            $table->enum('sikap',['A','B','C','D'])->nullable();
+            $table->integer('tugas')->nullable();
+            $table->integer('kompetensi')->nullable();
+            $table->integer('nilai_akhir')->nullable();    
             $table->timestamps();
         });
     }

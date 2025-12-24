@@ -6,7 +6,7 @@
             <i class="fas fa-list mr-3"></i> User Form
         </p>
         <div class="leading-loose">
-            <form class="p-10 bg-white rounded shadow-xl" action="{{ route('csc.create') }}" method="POST"
+            <form class="p-10 bg-white rounded shadow-xl" action="{{ route('csc.store') }}" method="POST"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="text-center">

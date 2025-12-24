@@ -10,15 +10,15 @@ use App\Models\StudyProgram;
 class StudyProgramController extends Controller
 {
      public function index(){
-        $studyPrograms =  StudyProgram::all();
-        return view('admin.studyPrograms.index',compact('studyPrograms'));
+        $studyPrograms =  StudyProgram::with('major')->orderBy('major_id')->paginate(10);
+        return view('admin.study-programs.index',compact('studyPrograms'));
     }
 
     public function create(){
         $studyPrograms =  StudyProgram::all();
         $majors =  Major::all();
   
-        return view('admin.studyPrograms.create',compact('studyPrograms','majors'));
+        return view('admin.study-programs.create',compact('studyPrograms','majors'));
     }
 
     public function store(Request $request){
@@ -28,12 +28,12 @@ class StudyProgramController extends Controller
         ]);
 
         StudyProgram::create($validate);
-        return redirect('/prodi');
+        return redirect('/prodis');
     }
 
        public function edit(){
         $studyPrograms =  StudyProgram::all();
-         return view('admin.studyPrograms.update',compact('studyPrograms'));
+         return view('admin.study-programs.update',compact('studyPrograms'));
     }
 
 

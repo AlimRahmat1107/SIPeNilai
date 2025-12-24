@@ -8,22 +8,23 @@ use App\Models\AcademicYear;
 
 class AcademicYearController extends Controller
 {
-    public function index(){
-        $academicYear = AcademicYear::all();
+    public function index()
+    {
+        $academicYear = AcademicYear::paginate(10);
         return view('admin.academic-year.index', compact('academicYear'));
-
     }
 
-    public function create(){
-        $academicYear = AcademicYear::all();
+    public function create()
+    {
 
-        return view('admin.academic-year.create', compact('academicYear'));
 
+        return view('admin.academic-year.create');
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
 
-       
+
         $validation = $request->validate([
             'academic_year_code' => 'required',
             'start_date' => 'required',
@@ -35,23 +36,22 @@ class AcademicYearController extends Controller
 
 
         return redirect('/academicyear')->with('sukses');
-
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $dataAcademicYear = AcademicYear::findOrFail($id);
-        return view('admin.profiles.update',compact('dataAcademicYear'));
-
-
+        return view('admin.profiles.update', compact('dataAcademicYear'));
     }
 
-    public function update(Request $request, $id){
+    public function update(Request $request, $id)
+    {
         $validated = $request->validate([
-             'academic_year_code' => 'required',
+            'academic_year_code' => 'required',
             'start_date' => 'required',
             'end_date' => 'required',
             'is_active' => 'required'
-            
+
         ]);
 
         $academicYear = AcademicYear::findOrFail($id);
@@ -59,12 +59,10 @@ class AcademicYearController extends Controller
 
 
         return redirect('/academicyear')->with('success', 'profile berhasil diperbarui!');
-
-
-
     }
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $academicYear = AcademicYear::findOrFail($id);
         $academicYear->destroy($id);
         return redirect('/academicyear')->with('success', 'Profile berhasil diperbarui!');

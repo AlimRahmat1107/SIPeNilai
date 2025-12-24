@@ -7,7 +7,7 @@
                 <i class="fas fa-list mr-3"></i> Table Mahasiswa
             </p>
             <div>
-                <a href="/kurikulum/create"
+                <a href="{{route('kurikulums.create')}}"
                     class=" text-white block rounded-2xl py-2 px-4 border border-amber-300 bg-blue-400"> <i
                         class="fas fa-plus"></i> data</a>
             </div>
@@ -45,7 +45,7 @@
                                 <a href="/user/update/{{ $data->id }}"
                                     class="w-10 h-10 bg-blue-500 hover:bg-blue-700 transition duration-300 shadow-md flex justify-center items-center  text-white font-bold py-2 px-4 rounded-full"><i
                                         class="fas fa-edit "></i></a>
-                                <form action="{{ route('user.delete', $data->id) }}" method="POST"
+                                <form action="{{ route('courses.destroy', $data->id) }}" method="POST"
                                     onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?');">
                                     @csrf
                                     @method('DELETE')

@@ -11,23 +11,23 @@ class Profile extends Model
     protected $guarded=[];
 
 
-    public function users(){
+    public function user(){
         return $this->belongsTo(User::class,'user_id');
     }
 
-    public function provinces(){
+    public function province(){
         return $this->belongsTo(Province::class,'province_id');
     }
 
-    public function wards(){
-        return $this->belongsTo(Ward::class,'ward_id');
+    public function urbanVillage(){
+        return $this->belongsTo(urbanVillage::class,'urban_village_id');
     }
 
-    public function subdistricts(){
-        return $this->belongsTo(Subdistrict::class,'subdistrict_id');
+    public function district(){
+        return $this->belongsTo(District::class,'district_id');
     }
 
-    public function cities(){
+    public function city(){
         return $this->belongsTo(City::class,'city_id');
     }
 }
